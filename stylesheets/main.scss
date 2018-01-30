@@ -1,0 +1,16 @@
+@import "../components/books";
+@import "../components/banner";
+@import "../components/book_detail";
+
+html, body {
+  background-color: #F3F1F2;
+  padding: 15px 0;
+}
+
+h1, h2, h3 {
+  color: #132563;
+}
+
+img {
+  max-width: 100%;
+}

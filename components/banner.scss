@@ -1,0 +1,22 @@
+.banner {
+  @media only screen and (max-width: 600px) {
+    height: 450px;
+  }
+
+  height: 300px;
+  padding: 64px 50px;
+
+  .narrow {
+    max-width: 320px;
+    font-size: 46px;
+  }
+
+  .wide {
+    @media only screen and (max-width: 400px) {
+      font-size: 42px;
+    }
+
+    max-width: 520px;
+    font-size: 52px;
+  }
+}

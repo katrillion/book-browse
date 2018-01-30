@@ -1,0 +1,92 @@
+.books {
+  .custom-nav-link {
+    color: #444444;
+  }
+
+  .grid-item {
+    position: relative;
+
+    figure {
+      background-color: #FFFFFF;
+    }
+
+    .grid-image {
+      width: 130px;
+      height: 194px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      margin: 0 auto;
+    }
+
+    &:hover {
+      .remove {
+        display: block;
+      }
+    }
+  }
+
+  .remove {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(to bottom left, #6688FF 37px, transparent 1px);
+    display: none;
+    cursor: pointer;
+
+    &:before {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      color: white;
+    }
+  }
+
+  .details {
+    padding: 7px 7px 0;
+    overflow: hidden;
+    position: relative;
+    color: #444444;
+    background: #FFFFFF;
+    
+    .fade-out {
+      display: block;
+      height: 26px;
+      width: 45px;
+      background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+      background-image: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1) 40px);
+      background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1) 40px);
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+      top: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    .title {
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .author {
+      font-size: 12px;
+    }
+  }
+
+  .add-new-btn {
+    -webkit-appearance: none;
+    min-height: 33%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #444444;
+
+    .add {
+      font-size: 30px;
+    }
+  }
+}
