@@ -4,21 +4,52 @@ import Banner from './banner.jsx';
 import BookList from './book_list.jsx'
 import { Route, Link, NavLink } from 'react-router-dom';
 
+const sortOrder = {
+  alphabetical: function(a, b) {
+    const titleA = a.title.toUpperCase();
+    const titleB = b.title.toUpperCase();
+    if (titleA < titleB) {
+      return -1;
+    }
+    if (titleA > titleB) {
+      return 1;
+    }
+    return 0;
+  },
+  reverseAlphabetical: function(a, b) {
+    const titleA = a.title.toUpperCase();
+    const titleB = b.title.toUpperCase();
+    if (titleA > titleB) {
+      return -1;
+    }
+    if (titleA < titleB) {
+      return 1;
+    }
+    return 0;
+  },
+  releaseDate: function(a, b) {
+    return Date.parse(b.releaseDate) - Date.parse(a.releaseDate);
+  }
+};
+
 export default class Books extends Component {
 
   constructor() {
     super();
     this.state = {
-      formVisible: false
+      formVisible: false,
+      sortedBooks: [],
+      filter: undefined,
     };
 
     this.handleNewClick = this.handleNewClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
+    this.addFilter = this.addFilter.bind(this);
   }
 
   componentDidUpdate() {
     const { match, onFilter } = this.props;
-    console.log(match.path); 
+    console.log(this.state.filter); 
   }
 
   handleNewClick(event) {
@@ -36,23 +67,30 @@ export default class Books extends Component {
     this.props.onGetBooks();
   }
 
-  sortBooks(books, filter, sort = 'alphabetical') {
+  addFilter(filter) {
+    this.setState({ filter });
+  }
 
+  sortBooks(books, filter, sortStyle = 'alphabetical') {
+
+    sortStyle = sortStyle.replace(/^\/|\/$/g, '');
     if (!books || books.length === 0) return null;
+    let filteredBooks = [ ...books ];
 
-    let filteredBooks = books;
-
-    if (filter === 'novel' || filter === 'non-fiction') {
-      filteredBooks = books.filter((book) => {
-        return `/${book.genre}` === filter;
+    if (filter) {
+      filteredBooks = filteredBooks.filter((book) => {
+        return book.genre === filter;
       })
     }
 
-    console.log(filteredBooks)
+    console.log({filteredBooks});
 
-    //const sortedBooks;
+    const sortedBooks = filteredBooks.sort(sortOrder[sortStyle]);
+    return this.renderBooks(sortedBooks);
+  }
 
-    /*return sortedBooks.map(function (book) {
+  renderBooks(sortedBooks) {
+    return sortedBooks.map(function (book) {
       return (
         <Link className="col-4 col-lg-2 grid-item" key={book.id} to={`/detail/${book.id}`}>
           <button 
@@ -73,34 +111,35 @@ export default class Books extends Component {
           </figure>
         </Link>
         );
-    }, this)*/
-  } 
+    }, this)
+  }
 
   render() {
     const { bookList } = this.props.books;
     const { match } = this.props;
 
-    this.sortBooks(bookList, this.props.match.path);
-
     return (
       <div className="books container">
-
         <nav className="mb-3">
-          <NavLink className="custom-nav-link d-inline-block pt-2 mr-3" to="/novel">
+          <button 
+            onClick={(e) => this.addFilter('novel', e)}
+            className={`custom-nav-link d-inline-block btn-link mr-3 ${this.state.filter === 'novel' ? 'active' : ''}`}>
             Novels
-          </NavLink>
-          <NavLink className="custom-nav-link d-inline-block pt-2 mr-1" to="/non-fiction">
+          </button>
+          <button
+            onClick={(e) => this.addFilter('non-fiction', e)}
+            className={`custom-nav-link d-inline-block btn-link mr-1 ${this.state.filter === 'non-fiction' ? 'active' : ''}`}>
             Non-fiction
-          </NavLink>
+          </button>
 
           <div className="dropdown d-inline-block align-top">
             <button className="btn btn-link custom-nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sort by
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <Link className="dropdown-item" to={`${match.url}/reverseAlphabetical`}>A - Z</Link>
-              <Link className="dropdown-item" to={`${match.url}/reverseAlphabetical`}>Z - A</Link>
-              <Link className="dropdown-item" to={`${match.url}/release`}>Release Date</Link>
+              <Link className="dropdown-item" to="/alphabetical">A - Z</Link>
+              <Link className="dropdown-item" to="/reverseAlphabetical">Z - A</Link>
+              <Link className="dropdown-item" to="/releaseDate">Newest First</Link>
             </div>
           </div>
         </nav>
@@ -114,9 +153,8 @@ export default class Books extends Component {
         { this.state.formVisible && <AddNew onAddTitle={this.props.onAddTitle} /> }
 
         <div className="row mt-5">
-          
 
-          <Route path={`${match.url}/:sortOrder`} component={BookList} />
+          { this.sortBooks(bookList, this.state.filter, match.path) }
 
           <button
             className="add-new-btn col-4 col-lg-2"

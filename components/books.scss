@@ -1,6 +1,13 @@
 .books {
   .custom-nav-link {
     color: #444444;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    background: transparent;
+    &.active {
+      font-weight: 600;
+    }
   }
 
   .grid-item {

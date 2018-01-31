@@ -11,7 +11,7 @@ const main = (
   <Provider store={store}>
     <Router>
       <Switch>
-        {["/", "/novel", "/non-fiction"].map(path => 
+        {["/", "/reverseAlphabetical", "/alphabetical", "/releaseDate"].map(path => 
           <Route exact={true} path={path} key={path} component={BookContainer} />
         )}
         <Route path="/detail/:bookId" component={BookDetailContainer} />
