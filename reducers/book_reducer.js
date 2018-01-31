@@ -27,6 +27,10 @@ export function bookReducer(state = {}, action) {
         });
       }
 
+      bookList.sort((a, b) => {
+        return a.title > b.title
+      });
+
       const newState = Object.assign({}, state, {
         inProgress: false,
         success: 'Got Books.',

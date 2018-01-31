@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Banner from './banner.jsx'
+import Banner from './banner.jsx';
 
 export default class BookDetail extends Component {
   componentWillMount() {
