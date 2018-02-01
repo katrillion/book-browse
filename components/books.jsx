@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AddNew from './add_new.jsx';
 import Banner from './banner.jsx';
-import BookList from './book_list.jsx'
 import { Route, Link, NavLink } from 'react-router-dom';
 
 const sortOrder = {
@@ -47,11 +46,6 @@ export default class Books extends Component {
     this.addFilter = this.addFilter.bind(this);
   }
 
-  componentDidUpdate() {
-    const { match, onFilter } = this.props;
-    console.log(this.state.filter); 
-  }
-
   handleNewClick(event) {
     event.preventDefault();
     this.setState({ formVisible: true });
@@ -82,8 +76,6 @@ export default class Books extends Component {
         return book.genre === filter;
       })
     }
-
-    console.log({filteredBooks});
 
     const sortedBooks = filteredBooks.sort(sortOrder[sortStyle]);
     return this.renderBooks(sortedBooks);

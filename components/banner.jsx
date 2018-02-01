@@ -6,7 +6,6 @@ export default class Banner extends Component {
     const bgGradient = `linear-gradient(to bottom right, ${bgColor} 278px, white 20px)`
 
     return (
-
       <div className="banner" style={{ background: bgGradient }}>
         <h2 className={textWidth}>{text}</h2>
       </div>
