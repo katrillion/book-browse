@@ -52,6 +52,7 @@ describe('BookContainer', () => {
 describe('Books Component', () => {
   let wrapper;
   const mockGetBooks = jest.fn();
+  const mockAddTitle = jest.fn();
 
   it('should call the mock get books function', () => {
     wrapper = shallow(<Books onGetBooks={mockGetBooks} books={initialState.books} match={{ path: '/' }} />)
