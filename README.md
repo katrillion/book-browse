@@ -2,7 +2,7 @@
 
 ## To Start
 
-Begin by cloning the project, and add a file named `firebase.txt` to the root directory. Paste the Firebase database key (provided in the submission email) into `firebase.txt`.
+Begin by cloning the project, and add a file named `firebase.txt` to the root directory. Paste the Firebase API key (provided in the submission email) into `firebase.txt`.
 
 To start the project, run the following terminal commands:
   
